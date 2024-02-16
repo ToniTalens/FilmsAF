@@ -40,31 +40,10 @@ class Persistencia_pelicula_mysql(IPersistencia_pelicula):
         return resultat
     
     def desa(self,pelicula:Pelicula) -> Pelicula:
-        cursor = self._conn.cursor(buffered=True)
-        query = "insert into PELICULA (titulo,anyo,puntuacion,votos) values (%s,%s,%s,%s);"
-        parameters = (pelicula.titol,pelicula.any,pelicula.puntuacio,pelicula.vots)
-        try:
-            cursor.execute(query,parameters)
-            nova_id = cursor.lastrowid
-            logging.info(f"[Persistencia] Nova pelicula amb id = {nova_id}.")
-            self._conn.commit() 
-        except mysql.connector.errors.IntegrityError:
-            logging.info("[Persistencia] Integrity error escrivint pelicula.")
-        return self.llegeix(pelicula.titol)
+        pass
     
     def llegeix(self, titol: str) -> Pelicula:
-        cursor = self._conn.cursor(buffered=True)
-        query = "select id, titulo, anyo, puntuacion, votos from PELICULA where titulo = %s;"
-        parametres = (titol,)
-        cursor.execute(query, parametres)
-        registre = cursor.fetchone()
-        cursor.reset()
-        if registre is None:
-            logging.info(f"[Persistencia] pelicula inexistent {titol}.")
-            return None
-        resultat = Pelicula(registre[1],registre[2],registre[3],registre[4],self,registre[0])
-        logging.info(f"[Persistencia] Trobada pelicula {titol}.")
-        return resultat
+        pass
 
 if __name__ == "__main__":
     logging.basicConfig(filename='pelicules.log', encoding='utf-8', level=logging.DEBUG)
